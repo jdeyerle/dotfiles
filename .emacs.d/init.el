@@ -1,52 +1,17 @@
-;; Move customization variables to a temporary dir and load it
-(setq custom-file
-      (expand-file-name
-       (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory))
-(load custom-file 'noerror 'nomessage)
+;; -*- lexical-binding: t -*-
 
-;; Set the right directory to store the native comp cache
-(add-to-list 'native-comp-eln-load-path
-	     (expand-file-name "eln-cache/" user-emacs-directory))
+;; Org is required for org-babel-tangle-file
+(require 'org)
 
-(require 'package)
+;; Bootstrap Emacs
+(let* ((this-file (or load-file-name buffer-file-name))
+       (this-dir (file-name-directory this-file))
+       (config-file-org (concat this-dir "config.org"))
+       (tangled-config-file (car (org-babel-tangle-file config-file-org))))
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+  (defun my/find-config ()
+    "Opens my emacs config file"
+    (interactive)
+    (find-file config-file-org))
 
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(use-package emacs
-  :ensure nil
-  :hook (dired-mode . auto-revert-mode)
-  :custom
-  (make-backup-files nil)
-  (inhibit-startup-message t)
-  (visible-bell t)
-  (native-comp-async-report-warnings-errors nil)
-  (user-emacs-directory (expand-file-name "~/.cache/emacs/"))
-  (url-history-file (expand-file-name "url/history" user-emacs-directory))
-  :config
-  ;; Visual Minor Modes
-  (menu-bar-mode 0)
-  (tool-bar-mode 0)
-  (scroll-bar-mode 0)
-  (global-display-line-numbers-mode 1)
-  (global-hl-line-mode 1)
-
-  ;; Functional Minor Modes
-  (ido-mode 1)
-  ;; Revert buffers when the underlying file has changed
-  (global-auto-revert-mode 1))
-
-(use-package no-littering
-  :ensure t)
-
-(use-package moe-theme
-  :ensure t
-  :config (load-theme 'moe-dark t))
+  (load-file tangled-config-file))
