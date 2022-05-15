@@ -27,6 +27,8 @@
   (inhibit-startup-message t)
   (visible-bell t)
   (native-comp-async-report-warnings-errors nil)
+  (user-emacs-directory (expand-file-name "~/.cache/emacs/"))
+  (url-history-file (expand-file-name "url/history" user-emacs-directory))
   :config
   ;; Visual Minor Modes
   (menu-bar-mode 0)
@@ -39,6 +41,9 @@
   (ido-mode 1)
   ;; Revert buffers when the underlying file has changed
   (global-auto-revert-mode 1))
+
+(use-package no-littering
+  :ensure t)
 
 (use-package moe-theme
   :ensure t
