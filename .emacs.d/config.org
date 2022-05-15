@@ -91,6 +91,25 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
     (global-auto-revert-mode 1))
 #+end_src
 
+* Org
+
+Make sure code blocks mirror the language Major Mode.
+
+#+begin_src emacs-lisp
+  (use-package org
+    :hook (org-mode . visual-line-mode)
+    :custom
+    ;; Code blocks
+    ;; (org-src-preserve-indentation t)
+    (org-src-tab-acts-natively t)
+    (org-src-fontify-natively t)
+    ;; org-edit-special (C-c ')
+    (org-src-window-setup 'current-window)
+    :config
+    ;; org-insert-structure-template (C-c C-,)
+    (add-to-list 'org-structure-template-alist '("se" . "src emacs-lisp")))
+#+end_src
+
 * Development
 
 Configurations for dev tools and programming languages.
@@ -105,7 +124,14 @@ Configurations for dev tools and programming languages.
 
 * Theme
 
+Add a dark theme and make Org mode less ugly.
+
 #+begin_src emacs-lisp
   (use-package moe-theme
     :config (load-theme 'moe-dark t))
+
+  (set-face-attribute 'org-block-begin-line nil
+                      :background nil
+                      :foreground nil
+                      :inherit 'org-block-end-line)
 #+end_src
