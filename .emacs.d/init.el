@@ -1,5 +1,7 @@
-;; Move customization variables to a separate file and load it
-(setq custom-file (locate-user-emacs-file "custom-vars.el"))
+;; Move customization variables to a temporary dir and load it
+(setq custom-file
+      (expand-file-name
+       (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory))
 (load custom-file 'noerror 'nomessage)
 
 ;; Set the right directory to store the native comp cache
@@ -48,4 +50,3 @@
 (use-package moe-theme
   :ensure t
   :config (load-theme 'moe-dark t))
-
