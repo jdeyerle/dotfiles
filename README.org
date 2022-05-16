@@ -1,0 +1,12 @@
+#+title: ~/.dotfiles
+#+author: jdeyerle
+#+startup: indent
+
+* Emacs
+
+I think this is the 3rd time I've started my config from scratch. This time I want to make sure it's easily shareable across multiple systems, so this seems like the perfect place for it. My config file can be found [[./.emacs.d/config.org][here]].
+
+* Shell
+ 
+The [[https://google.github.io/styleguide/shellguide.html][Shell Style Guide]] from Google seems pretty sane, so I'm going to try it out for a bit. It, along with many other style guides, recommends using [[https://github.com/koalaman/shellcheck][ShellCheck]] - so that will have to be installed. It's written in Haskell so it's worth a look anyway :).
+
