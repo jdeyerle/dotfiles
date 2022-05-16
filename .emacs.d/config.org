@@ -9,7 +9,7 @@
 Emacs 29 includes a just-in-time (JIT) native compiler for Emacs Lisp. This should be tweaked prior to compiling any Elisp.
 
 #+begin_src emacs-lisp
-  (setq native-comp-async-report-warnings-errors nil)
+(setq native-comp-async-report-warnings-errors nil)
 #+end_src
 
 * Host Environment
@@ -17,12 +17,12 @@ Emacs 29 includes a just-in-time (JIT) native compiler for Emacs Lisp. This shou
 Some environments require a little extra love.
 
 #+begin_src emacs-lisp
-  ;; Allow writing to unsafe server dir for wsl2
-  (when (file-directory-p "/mnt/wslg/runtime-dir/")
-    (advice-add 'server-ensure-safe-dir :around
-                (lambda (f dir)
-                  (unless (equal dir "/mnt/wslg/runtime-dir/emacs")
-                    (apply f dir)))))
+;; Allow writing to unsafe server dir for wsl2
+(when (file-directory-p "/mnt/wslg/runtime-dir/")
+  (advice-add 'server-ensure-safe-dir :around
+              (lambda (f dir)
+                (unless (equal dir "/mnt/wslg/runtime-dir/emacs")
+                  (apply f dir)))))
 #+end_src
 
 * Package Management
@@ -30,22 +30,22 @@ Some environments require a little extra love.
 Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/jwiegley/use-package][use-package]] to manage package configuration.  
 
 #+begin_src emacs-lisp
-  (require 'package)
+(require 'package)
 
-  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                           ("melpa-stable" . "https://stable.melpa.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")
-                           ("elpa" . "https://elpa.gnu.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
-  (package-initialize)
-  (unless package-archive-contents
-    (package-refresh-contents))
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
 
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
 
-  (require 'use-package-ensure)
-  (setq use-package-always-ensure t)
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 #+end_src
 
 * Keep .emacs.d Clean
@@ -53,15 +53,15 @@ Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/j
 Move transient files elsewhere so they don't show up as untracked in the Git repo. Load [[https://github.com/emacscollective/no-littering][no-littering]] to make this a bit easier.
 
 #+begin_src emacs-lisp
-  (setq  user-emacs-directory (expand-file-name "~/.cache/emacs/")
-         url-history-file (expand-file-name "url/history" user-emacs-directory))
+(setq  user-emacs-directory (expand-file-name "~/.cache/emacs/")
+       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
-  (use-package no-littering)
+(use-package no-littering)
 
-  (setq custom-file
-        (expand-file-name
-         (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory))
-  (load custom-file 'noerror 'nomessage)
+(setq custom-file
+      (expand-file-name
+       (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory))
+(load custom-file 'noerror 'nomessage)
 #+end_src
 
 * Better Defaults
@@ -69,26 +69,26 @@ Move transient files elsewhere so they don't show up as untracked in the Git rep
 Everyone knows the default Emacs configuration is unusable. Here are some improvements.
 
 #+begin_src emacs-lisp
-  (use-package emacs
-    :hook
-    ;; Auto reload dired buffers when the file system changes
-    (dired-mode . auto-revert-mode)
-    :custom
-    (inhibit-startup-message t)
-    (visible-bell t)
-    (make-backup-files nil)
-    :config
-    ;; Minor Modes
-    (menu-bar-mode 0)
-    (tool-bar-mode 0)
-    (scroll-bar-mode 0)
+(use-package emacs
+  :hook
+  ;; Auto reload dired buffers when the file system changes
+  (dired-mode . auto-revert-mode)
+  :custom
+  (inhibit-startup-message t)
+  (visible-bell t)
+  (make-backup-files nil)
+  :config
+  ;; Minor Modes
+  (menu-bar-mode 0)
+  (tool-bar-mode 0)
+  (scroll-bar-mode 0)
 
-    (global-display-line-numbers-mode 1)
-    (global-hl-line-mode 1)
-    (ido-mode 1)
+  (global-display-line-numbers-mode 1)
+  (global-hl-line-mode 1)
+  (ido-mode 1)
 
-    ;; Revert buffers when the underlying file has changed
-    (global-auto-revert-mode 1))
+  ;; Revert buffers when the underlying file has changed
+  (global-auto-revert-mode 1))
 #+end_src
 
 * Org
@@ -96,18 +96,18 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
 Make sure code blocks mirror the language Major Mode.
 
 #+begin_src emacs-lisp
-  (use-package org
-    :hook (org-mode . visual-line-mode)
-    :custom
-    ;; Code blocks
-    ;; (org-src-preserve-indentation t)
-    (org-src-tab-acts-natively t)
-    (org-src-fontify-natively t)
-    ;; org-edit-special (C-c ')
-    (org-src-window-setup 'current-window)
-    :config
-    ;; org-insert-structure-template (C-c C-,)
-    (add-to-list 'org-structure-template-alist '("se" . "src emacs-lisp")))
+(use-package org
+  :hook (org-mode . visual-line-mode)
+  :custom
+  ;; Code blocks
+  (org-src-preserve-indentation t)
+  (org-src-tab-acts-natively t)
+  (org-src-fontify-natively t)
+  ;; org-edit-special (C-c ')
+  (org-src-window-setup 'current-window)
+  :config
+  ;; org-insert-structure-template (C-c C-,)
+  (add-to-list 'org-structure-template-alist '("se" . "src emacs-lisp")))
 #+end_src
 
 * Development
@@ -119,7 +119,7 @@ Configurations for dev tools and programming languages.
 [[https://magit.vc/manual/magit/][Magit]] is the de facto standard Git client for Emacs.
 
 #+begin_src emacs-lisp
-  (use-package magit)
+(use-package magit)
 #+end_src
 
 * Theme
@@ -127,11 +127,11 @@ Configurations for dev tools and programming languages.
 Add a dark theme and make Org mode less ugly.
 
 #+begin_src emacs-lisp
-  (use-package moe-theme
-    :config (load-theme 'moe-dark t))
+(use-package moe-theme
+  :config (load-theme 'moe-dark t))
 
-  (set-face-attribute 'org-block-begin-line nil
-                      :background nil
-                      :foreground nil
-                      :inherit 'org-block-end-line)
+(set-face-attribute 'org-block-begin-line nil
+                    :background nil
+                    :foreground nil
+                    :inherit 'org-block-end-line)
 #+end_src
