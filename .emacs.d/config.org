@@ -50,7 +50,7 @@ Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/j
 
 * Keep .emacs.d Clean
 
-Move transient files elsewhere so they don't show up as untracked in the Git repo. Load [[https://github.com/emacscollective/no-littering][no-littering]] to make this a bit easier.
+Move transient files elsewhere so they don't show up as untracked in the Git repo. Load [[https://github.com/emacscollective/no-littering][no-littering]] and [[https://github.com/larstvei/Try][try]] to make this a bit easier.
 
 #+begin_src emacs-lisp
 (setq  user-emacs-directory (expand-file-name "~/.cache/emacs/")
@@ -62,6 +62,8 @@ Move transient files elsewhere so they don't show up as untracked in the Git rep
       (expand-file-name
        (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory))
 (load custom-file 'noerror 'nomessage)
+
+(use-package try)
 #+end_src
 
 * Better Defaults
