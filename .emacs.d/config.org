@@ -124,6 +124,21 @@ Configurations for dev tools and programming languages.
 (use-package magit)
 #+end_src
 
+** Productivity
+
+Add some color to make code easier to visually inspect.
+
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :hook
+  (emacs-lisp-mode . rainbow-mode)
+  (help-mode . rainbow-mode)
+  (org-mode . rainbow-mode))
+#+end_src
+
 * Theme
 
 Add a dark theme and make Org mode less ugly.
