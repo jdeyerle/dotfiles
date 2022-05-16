@@ -124,7 +124,11 @@ Configurations for dev tools and programming languages.
 (use-package magit)
 #+end_src
 
-** Productivity
+** Languages
+
+Language specific configurations and shared language features.
+
+*** General Configs
 
 Add some color to make code easier to visually inspect.
 
@@ -137,6 +141,19 @@ Add some color to make code easier to visually inspect.
   (emacs-lisp-mode . rainbow-mode)
   (help-mode . rainbow-mode)
   (org-mode . rainbow-mode))
+#+end_src
+
+*** Shell
+
+Most modern style guides recommend using [[https://github.com/koalaman/shellcheck][ShellCheck]]. This will need to be installed for [[https://github.com/federicotdn/flymake-shellcheck][flymake-shellcheck]] to work.
+
+#+begin_src emacs-lisp
+(use-package flymake-shellcheck
+  :commands flymake-shellcheck-load
+  :init (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
+
+;; set tab width
+(setq sh-basic-offset 2)
 #+end_src
 
 * Theme
