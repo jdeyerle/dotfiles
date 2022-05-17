@@ -4,27 +4,6 @@
 #+startup: content
 #+startup: indent
 
-* Native Compiler
-
-Emacs 29 includes a just-in-time (JIT) native compiler for Emacs Lisp. This should be tweaked prior to compiling any Elisp.
-
-#+begin_src emacs-lisp
-(setq native-comp-async-report-warnings-errors nil)
-#+end_src
-
-* Host Environment
-
-Some environments require a little extra love.
-
-#+begin_src emacs-lisp
-;; Allow writing to unsafe server dir for wsl2
-(when (file-directory-p "/mnt/wslg/runtime-dir/")
-  (advice-add 'server-ensure-safe-dir :around
-              (lambda (f dir)
-                (unless (equal dir "/mnt/wslg/runtime-dir/emacs")
-                  (apply f dir)))))
-#+end_src
-
 * Package Management
 
 Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/jwiegley/use-package][use-package]] to manage package configuration.  
