@@ -91,6 +91,16 @@ Make sure code blocks mirror the language Major Mode.
   (add-to-list 'org-structure-template-alist '("se" . "src emacs-lisp")))
 #+end_src
 
+* Web
+
+Use default browser environment variable if it exists.
+
+#+begin_src emacs-lisp
+(if-let ((browser (getenv "BROWSER"))) 
+    (setq browse-url-generic-program (executable-find browser) 
+	  browse-url-browser-function 'browse-url-generic))
+#+end_src
+
 * Development
 
 Configurations for dev tools and programming languages.
