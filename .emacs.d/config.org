@@ -126,6 +126,15 @@ Configurations for dev tools and programming languages.
 (use-package magit)
 #+end_src
 
+** APIs
+
+Add [[https://github.com/tkf/emacs-request][request]] and [[https://github.com/pashky/restclient.el][restclient]] to make working with APIs fast and easy.
+
+#+begin_src emacs-lisp
+(use-package request)
+(use-package restclient)
+#+end_src
+
 ** Languages
 
 Language specific configurations and shared language features.
