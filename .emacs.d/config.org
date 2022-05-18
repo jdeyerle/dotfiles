@@ -6,7 +6,7 @@
 
 * Package Management
 
-Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/jwiegley/use-package][use-package]] to manage package configuration.  
+Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/jwiegley/use-package][use-package]] to manage package configuration.
 
 #+begin_src emacs-lisp
 (require 'package)
@@ -69,7 +69,20 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
   (ido-mode 1)
 
   ;; Revert buffers when the underlying file has changed
-  (global-auto-revert-mode 1))
+  (global-auto-revert-mode 1)
+
+  (setq-default tab-width 2
+                indent-tabs-mode nil))
+#+end_src
+
+* Text Editing
+
+General text editing configurations shared across most major modes.
+
+#+begin_src emacs-lisp
+(use-package whitespace-cleanup-mode
+  :config
+  (global-whitespace-cleanup-mode 1))
 #+end_src
 
 * Org
@@ -96,9 +109,9 @@ Make sure code blocks mirror the language Major Mode.
 Use default browser environment variable if it exists.
 
 #+begin_src emacs-lisp
-(if-let ((browser (getenv "BROWSER"))) 
-    (setq browse-url-generic-program (executable-find browser) 
-	  browse-url-browser-function 'browse-url-generic))
+(if-let ((browser (getenv "BROWSER")))
+    (setq browse-url-generic-program (executable-find browser)
+          browse-url-browser-function 'browse-url-generic))
 #+end_src
 
 * Development
