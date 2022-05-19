@@ -135,13 +135,7 @@ Add [[https://github.com/tkf/emacs-request][request]] and [[https://github.com/p
 (use-package restclient)
 #+end_src
 
-** Languages
-
-Language specific configurations and shared language features.
-
-*** General Configs
-
-Add some color to make code easier to visually inspect.
+** General Configs
 
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
@@ -152,6 +146,25 @@ Add some color to make code easier to visually inspect.
   (emacs-lisp-mode . rainbow-mode)
   (help-mode . rainbow-mode)
   (org-mode . rainbow-mode))
+
+(use-package company)
+#+end_src
+
+** Languages
+
+Language specific configurations.
+
+*** Emacs Lisp
+
+#+begin_src emacs-lisp
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
+
+(use-package helpful
+  :bind (("C-h f" . helpful-callable)
+         ("C-h v" . helpful-variable)
+         ("C-h o" . helpful-symbol)
+         ("C-h C" . helpful-command)
+         ("C-c C-d" . helpful-at-point)))
 #+end_src
 
 *** Shell
