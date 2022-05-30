@@ -67,6 +67,7 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
   (global-display-line-numbers-mode 1)
   (global-hl-line-mode 1)
   (ido-mode 1)
+  (column-number-mode 1)
 
   ;; Revert buffers when the underlying file has changed
   (global-auto-revert-mode 1)
