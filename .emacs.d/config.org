@@ -51,6 +51,7 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
 
 #+begin_src emacs-lisp
 (use-package emacs
+  :bind ("C-x C-b" . ibuffer)
   :hook
   ;; Auto reload dired buffers when the file system changes
   (dired-mode . auto-revert-mode)
@@ -73,7 +74,10 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
   (global-auto-revert-mode 1)
 
   (setq-default tab-width 2
-                indent-tabs-mode nil))
+                indent-tabs-mode nil)
+
+  (if (display-graphic-p)
+      (global-unset-key (kbd "C-z"))))
 #+end_src
 
 * Text Editing
@@ -105,6 +109,11 @@ Add [[https://github.com/Alexander-Miller/treemacs][Treemacs]], because having a
 
 (use-package treemacs-magit
   :after treemacs magit)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
 #+end_src
 
 * Org
