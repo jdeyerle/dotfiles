@@ -77,7 +77,7 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
                 indent-tabs-mode nil)
 
   (if (display-graphic-p)
-      (global-unset-key (kbd "C-z"))))
+      (global-unset-key (kbd "C-x C-z"))))
 #+end_src
 
 * Text Editing
