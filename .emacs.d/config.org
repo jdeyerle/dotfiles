@@ -78,6 +78,9 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
 
   (if (display-graphic-p)
       (global-unset-key (kbd "C-x C-z"))))
+
+(defun my/turn-off-line-numbers-hook ()
+  (display-line-numbers-mode -1))
 #+end_src
 
 * Text Editing
@@ -99,7 +102,7 @@ Add [[https://github.com/Alexander-Miller/treemacs][Treemacs]], because having a
   :custom
   (treemacs-is-never-other-window t)
   (treemacs-width 30)
-  :hook (treemacs-mode . (lambda() (display-line-numbers-mode -1)))
+  :hook (treemacs-mode . my/turn-off-line-numbers-hook)
   :bind (("<f8>" . treemacs)
          ("C-<f8>" . treemacs-select-window)))
 
@@ -183,15 +186,21 @@ Add [[https://github.com/tkf/emacs-request][request]] and [[https://github.com/p
 
 ** Terminal Modes
 
+Make terminal modes a bit better and add [[https://github.com/akermu/emacs-libvterm][vterm]].
+
 #+begin_src emacs-lisp
 (use-package eterm-256color
   :hook (term-mode . eterm-256color-mode))
 
 (use-package term
-  :hook (term-mode . (lambda() (display-line-numbers-mode -1))))
+  :hook (term-mode . my/turn-off-line-numbers-hook))
+
+(use-package vterm
+  :commands vterm
+  :hook (vterm-mode . my/turn-off-line-numbers-hook))
 
 (use-package eshell
-  :hook ((eshell-mode . (lambda() (display-line-numbers-mode -1)))
+  :hook ((eshell-mode . my/turn-off-line-numbers-hook)
          (eshell-pre-command . eshell-save-some-history))
   :custom
   (eshell-history-size 10000)
@@ -212,7 +221,7 @@ Language specific configurations.
 #+begin_src emacs-lisp
 (use-package clojure-mode)
 (use-package cider
-  :hook (cider-repl-mode . (lambda() (display-line-numbers-mode -1))))
+  :hook (cider-repl-mode . my/turn-off-line-numbers-hook))
 #+end_src
 
 *** Emacs Lisp
