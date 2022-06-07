@@ -176,12 +176,12 @@ Add [[https://github.com/tkf/emacs-request][request]] and [[https://github.com/p
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-mode
-  :hook
-  (emacs-lisp-mode . rainbow-mode)
-  (help-mode . rainbow-mode)
-  (org-mode . rainbow-mode))
+  :hook (prog-mode help-mode org-mode))
 
-(use-package company)
+(use-package company
+  :hook ((emacs-lisp-mode
+          cider-mode
+          clojure-mode) . company-mode))
 #+end_src
 
 ** Terminal Modes
@@ -215,6 +215,16 @@ Make terminal modes a bit better and add [[https://github.com/akermu/emacs-libvt
 ** Languages
 
 Language specific configurations.
+
+*** Meta Lisp
+
+Useful packages for editing any Lisp.
+
+#+begin_src emacs-lisp
+(use-package parinfer-rust-mode
+  :custom (parinfer-rust-auto-download t)
+  :hook (emacs-lisp-mode clojure-mode))
+#+end_src
 
 *** Clojure
 
