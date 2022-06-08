@@ -29,7 +29,7 @@ Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/j
 
 * Keep .emacs.d Clean
 
-Move transient files elsewhere so they don't show up as untracked in the Git repo. Load [[https://github.com/emacscollective/no-littering][no-littering]] and [[https://github.com/larstvei/Try][try]] to make this a bit easier.
+Move transient files elsewhere so they don't show up as untracked in the Git repo. Load [[https://github.com/emacscollective/no-littering][no-littering]] and [[https://github.com/larstvei/Try][try]] to make keeping things tidy a bit easier.
 
 #+begin_src emacs-lisp
 (setq  user-emacs-directory (expand-file-name "~/.cache/emacs/")
@@ -79,47 +79,28 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
   (if (display-graphic-p)
       (global-unset-key (kbd "C-x C-z"))))
 
-(defun my/turn-off-line-numbers-hook ()
+(defun my/turn-off-line-numbers ()
   (display-line-numbers-mode -1))
-#+end_src
-
-* Text Editing
-
-General text editing configurations shared across most major modes.
-
-#+begin_src emacs-lisp
-(use-package whitespace-cleanup-mode
-  :config
-  (global-whitespace-cleanup-mode 1))
 #+end_src
 
 * Enhancements
 
-Add [[https://github.com/Alexander-Miller/treemacs][Treemacs]], because having a file explorer is nice.
+Spruce up emacs a bit.
 
-#+begin_src emacs-lisp
-(use-package treemacs
-  :custom
-  (treemacs-is-never-other-window t)
-  (treemacs-width 30)
-  :hook (treemacs-mode . my/turn-off-line-numbers-hook)
-  :bind (("<f8>" . treemacs)
-         ("C-<f8>" . treemacs-select-window)))
-
-(use-package treemacs-icons-dired
-  :after treemacs dired
-  :config (treemacs-icons-dired-mode))
-
-(use-package treemacs-magit
-  :after treemacs magit)
-#+end_src
+** Editing
 
 #+begin_src emacs-lisp
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
+
+(use-package rainbow-mode
+  :hook (prog-mode help-mode org-mode))
+
+(use-package whitespace-cleanup-mode
+  :config (global-whitespace-cleanup-mode 1))
 #+end_src
 
-* Org
+** Org
 
 Make sure code blocks mirror the language Major Mode.
 
@@ -138,7 +119,28 @@ Make sure code blocks mirror the language Major Mode.
   (add-to-list 'org-structure-template-alist '("se" . "src emacs-lisp")))
 #+end_src
 
-* Web
+** Treemacs
+
+Add [[https://github.com/Alexander-Miller/treemacs][Treemacs]], because having a file explorer is nice.
+
+#+begin_src emacs-lisp
+(use-package treemacs
+  :custom
+  (treemacs-is-never-other-window t)
+  (treemacs-width 30)
+  :hook (treemacs-mode . my/turn-off-line-numbers)
+  :bind (("<f8>" . treemacs)
+         ("C-<f8>" . treemacs-select-window)))
+
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :after treemacs magit)
+#+end_src
+
+** Web
 
 Use default browser environment variable if it exists.
 
@@ -175,13 +177,11 @@ Add [[https://github.com/tkf/emacs-request][request]] and [[https://github.com/p
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package rainbow-mode
-  :hook (prog-mode help-mode org-mode))
-
 (use-package company
-  :hook ((emacs-lisp-mode
-          cider-mode
-          clojure-mode) . company-mode))
+  :hook ((cider-repl-mode
+          clojure-mode
+          emacs-lisp-mode
+          ielm-mode) . company-mode))
 #+end_src
 
 ** Terminal Modes
@@ -193,14 +193,14 @@ Make terminal modes a bit better and add [[https://github.com/akermu/emacs-libvt
   :hook (term-mode . eterm-256color-mode))
 
 (use-package term
-  :hook (term-mode . my/turn-off-line-numbers-hook))
+  :hook (term-mode . my/turn-off-line-numbers))
 
 (use-package vterm
   :commands vterm
-  :hook (vterm-mode . my/turn-off-line-numbers-hook))
+  :hook (vterm-mode . my/turn-off-line-numbers))
 
 (use-package eshell
-  :hook ((eshell-mode . my/turn-off-line-numbers-hook)
+  :hook ((eshell-mode . my/turn-off-line-numbers)
          (eshell-pre-command . eshell-save-some-history))
   :custom
   (eshell-history-size 10000)
@@ -231,13 +231,14 @@ Useful packages for editing any Lisp.
 #+begin_src emacs-lisp
 (use-package clojure-mode)
 (use-package cider
-  :hook (cider-repl-mode . my/turn-off-line-numbers-hook))
+  :hook (cider-repl-mode . my/turn-off-line-numbers))
 #+end_src
 
 *** Emacs Lisp
 
 #+begin_src emacs-lisp
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
+(add-hook 'ielm-mode-hook 'my/turn-off-line-numbers)
 
 (use-package helpful
   :bind (("C-h f" . helpful-callable)
