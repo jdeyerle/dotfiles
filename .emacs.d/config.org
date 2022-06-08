@@ -98,6 +98,16 @@ Spruce up emacs a bit.
 
 (use-package whitespace-cleanup-mode
   :config (global-whitespace-cleanup-mode 1))
+
+(use-package spell-fu)
+#+end_src
+
+** Navigation
+
+#+begin_src emacs-lisp
+(use-package avy
+  :bind (("M-g M-g" . avy-goto-char)
+         ("M-g b" . avy-pop-mark)))
 #+end_src
 
 ** Org
@@ -246,6 +256,15 @@ Useful packages for editing any Lisp.
          ("C-h o" . helpful-symbol)
          ("C-h C" . helpful-command)
          ("C-c C-d" . helpful-at-point)))
+#+end_src
+
+*** Markdown
+
+#+begin_src emacs-lisp
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)))
+  ;;:custom (markdown-command "multimarkdown"))
 #+end_src
 
 *** Shell
