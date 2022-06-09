@@ -63,6 +63,20 @@
   (interactive)
   (find-file "~/.emacs.d/config.org"))
 
+(defun my/debuff ()
+  "Kills buffers that commonly crowd my buffer list"
+  (interactive)
+  (let* ((regexps '("^magit"
+                    "^\\*helpful"
+                    "\\*Disabled Command\\*"
+                    "\\*Completions\\*"
+                    "\\*Backtrace\\*"
+                    "\\*Messages\\*"
+                    "\\*Ibuffer\\*"
+                    "\\*Compile-Log\\*"))
+         (regexp (string-join regexps "\\|")))
+    (kill-matching-buffers regexp nil 'no-ask)))
+
 (defun my/turn-off-line-numbers ()
   (display-line-numbers-mode -1))
 
