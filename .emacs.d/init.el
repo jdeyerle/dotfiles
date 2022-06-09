@@ -15,8 +15,8 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(setq  user-emacs-directory (expand-file-name "~/.cache/emacs/")
-       url-history-file (expand-file-name "url/history" user-emacs-directory))
+(setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+      url-history-file (expand-file-name "url/history" user-emacs-directory))
 
 (use-package no-littering)
 
@@ -82,10 +82,12 @@
 (use-package org
   :hook (org-mode . visual-line-mode)
   :custom
-  ;; Code blocks
+  ;; code blocks
   (org-src-preserve-indentation t)
   (org-src-tab-acts-natively t)
   (org-src-fontify-natively t)
+  ;; quote blocks
+  (org-fontify-quote-and-verse-blocks t)
   ;; org-edit-special (C-c ')
   (org-src-window-setup 'current-window)
   :config

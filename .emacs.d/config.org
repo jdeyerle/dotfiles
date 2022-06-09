@@ -5,6 +5,19 @@
 #+startup: content
 #+startup: indent
 
+* Preface
+
+#+begin_quote
+"Emacs is a great operating system, but it lacks a good editor" \\
+--- Ancient Vim proverb
+#+end_quote
+
+There is a running joke in the programming community that Emacs is more of an operating system than an editor. While many consider it a joke, I think it's fair to say that Emacs is more of a productivity environment for hackers. 
+
+Emacs is fully customizable and has excellent editor and IDE support, but its out of the box configuration does not rival modern dev tools. Alternate distributions like [[https://www.spacemacs.org][spacemacs]] and [[https://github.com/doomemacs/doomemacs][Doom Emacs]] do a great job of addressing this issue, but I wanted to take full control over my configuration.
+
+Of course, it would be a sin to build a large configuration file in Emacs and not use [[https://orgmode.org][org-mode]]. This configuration file will automatically be tangled by =Org Babel= and output to [[./init.el][init.el]].
+
 * Package Management
 
 Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/jwiegley/use-package][use-package]] to manage package configuration.
@@ -33,8 +46,8 @@ Set up ELPA, MELPA, and Org package repositories and load [[https://github.com/j
 Move transient files elsewhere so they don't show up as untracked in the Git repo. Load [[https://github.com/emacscollective/no-littering][no-littering]] and [[https://github.com/larstvei/Try][try]] to make keeping things tidy a bit easier.
 
 #+begin_src emacs-lisp
-(setq  user-emacs-directory (expand-file-name "~/.cache/emacs/")
-       url-history-file (expand-file-name "url/history" user-emacs-directory))
+(setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+      url-history-file (expand-file-name "url/history" user-emacs-directory))
 
 (use-package no-littering)
 
@@ -128,10 +141,12 @@ Make sure code blocks mirror the language Major Mode and add auto tangling.
 (use-package org
   :hook (org-mode . visual-line-mode)
   :custom
-  ;; Code blocks
+  ;; code blocks
   (org-src-preserve-indentation t)
   (org-src-tab-acts-natively t)
   (org-src-fontify-natively t)
+  ;; quote blocks
+  (org-fontify-quote-and-verse-blocks t)
   ;; org-edit-special (C-c ')
   (org-src-window-setup 'current-window)
   :config
