@@ -47,6 +47,7 @@
   (global-hl-line-mode 1)
   (ido-mode 1)
   (column-number-mode 1)
+  (delete-selection-mode 1)
 
   ;; Revert buffers when the underlying file has changed
   (global-auto-revert-mode 1)
