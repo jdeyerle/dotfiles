@@ -80,6 +80,14 @@
 (defun my/turn-off-line-numbers ()
   (display-line-numbers-mode -1))
 
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-M->" . mc/skip-to-next-like-this)
+         ("C-M-<" . mc/skip-to-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
+
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
