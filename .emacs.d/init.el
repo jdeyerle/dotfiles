@@ -28,7 +28,8 @@
 (use-package try)
 
 (use-package emacs
-  :bind ("C-x C-b" . ibuffer)
+  :bind (("C-x C-b" . ibuffer)
+         ("C-x C-k" . kill-buffer-and-window))
   :hook
   ;; Auto reload dired buffers when the file system changes
   (dired-mode . auto-revert-mode)
