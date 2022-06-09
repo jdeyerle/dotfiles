@@ -1,6 +1,7 @@
 #+title: Emacs Configuration
 #+author: jdeyerle
-#+property: header-args:emacs-lisp :tangle ./.config.el
+#+property: header-args:emacs-lisp :tangle ./init.el
+#+auto_tangle: t
 #+startup: content
 #+startup: indent
 
@@ -78,6 +79,15 @@ Everyone knows the default Emacs configuration is unusable. Here are some improv
 
   (if (display-graphic-p)
       (global-unset-key (kbd "C-x C-z"))))
+#+end_src
+
+* My Functions
+
+#+begin_src emacs-lisp
+(defun my/find-config ()
+  "Opens my emacs config file"
+  (interactive)
+  (find-file "~/.emacs.d/config.org"))
 
 (defun my/turn-off-line-numbers ()
   (display-line-numbers-mode -1))
@@ -112,7 +122,7 @@ Spruce up emacs a bit.
 
 ** Org
 
-Make sure code blocks mirror the language Major Mode.
+Make sure code blocks mirror the language Major Mode and add auto tangling.
 
 #+begin_src emacs-lisp
 (use-package org
@@ -127,6 +137,9 @@ Make sure code blocks mirror the language Major Mode.
   :config
   ;; org-insert-structure-template (C-c C-,)
   (add-to-list 'org-structure-template-alist '("se" . "src emacs-lisp")))
+
+(use-package org-auto-tangle
+  :hook (org-mode . org-auto-tangle-mode))
 #+end_src
 
 ** Treemacs
