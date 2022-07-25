@@ -33,6 +33,7 @@
   :hook
   ;; Auto reload dired buffers when the file system changes
   (dired-mode . auto-revert-mode)
+  (prog-mode . visual-line-mode)
   :custom
   (inhibit-startup-message t)
   (visible-bell t)
