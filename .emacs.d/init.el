@@ -177,9 +177,14 @@
   :config
   (eshell-git-prompt-use-theme 'multiline2))
 
-(use-package parinfer-rust-mode
-  :custom (parinfer-rust-auto-download t)
-  :hook (emacs-lisp-mode clojure-mode))
+;; (use-package parinfer-rust-mode
+;;   :custom (parinfer-rust-auto-download t)
+;;   :hook (emacs-lisp-mode clojure-mode))
+(use-package paredit
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+  (add-hook 'clojure-mode-hook 'paredit-mode)
+  (add-hook 'cider-repl-mode-hook 'paredit-mode))
 
 (use-package clojure-mode)
 (use-package cider
