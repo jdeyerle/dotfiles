@@ -5,7 +5,7 @@
 
 emacs_d=$HOME/.emacs.d
 
-if [ -e "$emacs_d" ] && [ ! -L "$emacs_d" ]; then
+if [ -e $emacs_d ] && [ ! -L "$emacs_d" ]; then
   mv "$emacs_d" "$emacs_d.backup"
 fi
 

@@ -129,7 +129,7 @@
   (treemacs-width 30)
   :hook (treemacs-mode . my/turn-off-line-numbers)
   :bind (("<f8>" . treemacs)
-         ("C-<f8>" . treemacs-select-window))) 
+         ("C-<f8>" . treemacs-select-window)))
 
 (use-package treemacs-icons-dired
   :after treemacs dired
@@ -147,14 +147,32 @@
 (use-package request)
 (use-package restclient)
 
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+(use-package lsp-mode
+  :hook ((clojure-mode
+          clojurescript-mode
+          clojurec-mode) . lsp-deferred)
+  :bind (:map
+         lsp-mode-map
+         ("<f12>" . lsp-find-definition)
+         ("C-<f12>" . lsp-find-references))
+  :init
+  (require 'lsp-ido)
+  (setq lsp-keymap-prefix "C-c l")
+  :commands (lsp lsp-deferred))
+
+(use-package lsp-ui :commands lsp-ui-mode)
 
 (use-package company
   :hook ((cider-repl-mode
           clojure-mode
           emacs-lisp-mode
           ielm-mode) . company-mode))
+
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package eterm-256color
   :hook (term-mode . eterm-256color-mode))

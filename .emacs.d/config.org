@@ -235,17 +235,35 @@ Add [[https://github.com/tkf/emacs-request][request]] and [[https://github.com/p
 (use-package restclient)
 #+end_src
 
-** General Configs
+** IDE
 
 #+begin_src emacs-lisp
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+(use-package lsp-mode
+  :hook ((clojure-mode
+          clojurescript-mode
+          clojurec-mode) . lsp-deferred)
+  :bind (:map
+         lsp-mode-map
+         ("<f12>" . lsp-find-definition)
+         ("C-<f12>" . lsp-find-references))
+  :init
+  (require 'lsp-ido)
+  (setq lsp-keymap-prefix "C-c l")
+  :commands (lsp lsp-deferred))
+
+(use-package lsp-ui :commands lsp-ui-mode)
 
 (use-package company
   :hook ((cider-repl-mode
           clojure-mode
           emacs-lisp-mode
           ielm-mode) . company-mode))
+
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
 ** Terminal Modes
