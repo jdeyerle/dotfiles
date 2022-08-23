@@ -119,8 +119,9 @@
   ;; org-insert-structure-template (C-c C-,)
   (add-to-list 'org-structure-template-alist '("se" . "src emacs-lisp")))
 
-(use-package org-auto-tangle
-  :hook (org-mode . org-auto-tangle-mode))
+;; BUG: org-collect-keywords not found - use C-c C-v t
+;;(use-package org-auto-tangle
+;;  :hook (org-mode . org-auto-tangle-mode))
 
 (use-package treemacs
   :custom
@@ -128,7 +129,7 @@
   (treemacs-width 30)
   :hook (treemacs-mode . my/turn-off-line-numbers)
   :bind (("<f8>" . treemacs)
-         ("C-<f8>" . treemacs-select-window)))
+         ("C-<f8>" . treemacs-select-window))) 
 
 (use-package treemacs-icons-dired
   :after treemacs dired

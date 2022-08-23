@@ -12,7 +12,7 @@
 --- Ancient Vim proverb
 #+end_quote
 
-There is a running joke in the programming community that Emacs is more of an operating system than an editor. While many consider it a joke, I think it's fair to say that Emacs is more of a productivity environment for hackers. 
+There is a running joke in the programming community that Emacs is more of an operating system than an editor. While many consider it a joke, I think it's fair to say that Emacs is more of a productivity environment for hackers.
 
 Emacs is fully customizable and has excellent editor and IDE support, but its out of the box configuration does not rival modern dev tools. Alternate distributions like [[https://www.spacemacs.org][spacemacs]] and [[https://github.com/doomemacs/doomemacs][Doom Emacs]] do a great job of addressing this issue, but I wanted to take full control over my configuration.
 
@@ -178,8 +178,9 @@ Make sure code blocks mirror the language Major Mode and add auto tangling.
   ;; org-insert-structure-template (C-c C-,)
   (add-to-list 'org-structure-template-alist '("se" . "src emacs-lisp")))
 
-(use-package org-auto-tangle
-  :hook (org-mode . org-auto-tangle-mode))
+;; BUG: org-collect-keywords not found - use C-c C-v t
+;;(use-package org-auto-tangle
+;;  :hook (org-mode . org-auto-tangle-mode))
 #+end_src
 
 ** Treemacs
