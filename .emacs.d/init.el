@@ -56,8 +56,9 @@
   (setq-default tab-width 2
                 indent-tabs-mode nil)
 
-  (if (display-graphic-p)
-      (global-unset-key (kbd "C-x C-z"))))
+  (when (display-graphic-p)
+    (global-unset-key (kbd "C-x C-z"))
+    (global-unset-key (kbd "C-z"))))
 
 (defun my/find-config ()
   "Opens my emacs config file"
