@@ -206,8 +206,14 @@
   (add-hook 'clojure-mode-hook 'paredit-mode)
   (add-hook 'cider-repl-mode-hook 'paredit-mode))
 
-(use-package clojure-mode)
+(use-package clojure-mode
+  :commands clojure-mode)
+
+(use-package clojure-mode-extra-font-locking
+  :after clojure-mode)
+
 (use-package cider
+  :commands cider-mode-hook
   :hook (cider-repl-mode . my/turn-off-line-numbers))
 
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
