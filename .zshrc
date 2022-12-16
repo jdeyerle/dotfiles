@@ -6,6 +6,28 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;32m"
+BLUE="\033[0;34m"
+NOCOLOR="\033[0m"
+
+# Install custom omz plugins
+omz_clone_plugin() {
+  local plugin_name="$1"
+  local git_url="$2"
+  if [ -d "$ZSH_CUSTOM/plugins" ] && ! [ -d "$ZSH_CUSTOM/plugins/$plugin_name" ]; then
+    echo "${GREEN}Installing custom omz plugin:${NOCOLOR} $plugin_name"
+    git clone --depth 1 "$git_url" "$ZSH_CUSTOM/plugins/$plugin_name"
+    echo ""
+  fi
+}
+
+export omz_install_custom_plugins() {
+  omz_clone_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
+  omz_clone_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
+}
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -16,7 +38,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="bira" # set by `omz`
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -78,7 +100,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git web-search zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
