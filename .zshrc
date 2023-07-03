@@ -135,3 +135,6 @@ if [ -f '/Users/jdeyerle/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jdeye
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/jdeyerle/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jdeyerle/.google-cloud-sdk/completion.zsh.inc'; fi
+
+# Add personal scripts from dotfile repo to $PATH
+export PATH="$(realpath "$0" | sed 's|\(.*\)/.*|\1|')"/bin:"$PATH"

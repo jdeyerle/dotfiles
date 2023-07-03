@@ -1,0 +1,153 @@
+#! /bin/bash
+
+main() {
+  case $1 in
+  dock-autohide)
+    dock_autohide "$2"
+    ;;
+  dock-autohide-delay)
+    dock_autohide_delay "$2"
+    ;;
+  dock-show-hidden)
+    dock_show_hidden "$2"
+    ;;
+  mouse-scaling)
+    mouse_scaling "$2"
+    ;;
+  set-defaults)
+    set_defaults
+    ;;
+  *)
+    info
+    ;;
+  esac
+}
+
+domains=(dock mouse)
+dock=(autohide autohide-delay show-hidden)
+mouse=(scaling)
+
+mouse_scaling() {
+  if [ -z "$1" ]; then
+    defaults read -g com.apple.mouse.scaling
+  else
+    defaults write -g com.apple.mouse.scaling -float "$1"
+    echo "Restart your computer for changes to take effect."
+  fi
+}
+
+dock_autohide() {
+  if [ -z "$1" ]; then
+    defaults read com.apple.dock autohide
+  else
+    defaults write com.apple.dock autohide -bool "$1"
+    killall Dock
+  fi
+}
+
+dock_autohide_delay() {
+  if [ -z "$1" ]; then
+    if defaults read com.apple.dock | grep -q autohide-delay; then
+      defaults read com.apple.dock autohide-delay
+    else
+      echo "<undefined>"
+    fi
+  elif [ "$1" == 'reset' ]; then
+    defaults delete com.apple.dock autohide-delay
+    killall Dock
+  else
+    defaults write com.apple.dock autohide-delay -float "$1"
+    killall Dock
+  fi
+}
+
+dock_show_hidden() {
+  if [ -z "$1" ]; then
+    defaults read com.apple.dock showhidden
+  else
+    defaults write com.apple.dock showhidden -bool "$1"
+    killall Dock
+  fi
+}
+
+yes_or_no() {
+  read -r input
+  case $input in
+  1 | yes | y | true | t | on | enable | enabled)
+    echo "yes"
+    ;;
+  0 | no | n | false | f | off | disable | disabled)
+    echo "no"
+    ;;
+  *)
+    echo "<undefined>"
+    ;;
+  esac
+}
+
+set_defaults() {
+  mouse_scaling 8
+  dock_autohide yes
+  dock_autohide_delay 0
+  dock_show_hidden yes
+}
+
+pad() {
+  local string=$1
+  local length=$2
+  local pad_length=$((length - ${#string}))
+  local pad=$(printf "%${pad_length}s" " ")
+  echo "$string$pad"
+}
+
+array_contains() {
+  local array="$1[@]"
+  local seeking=$2
+  local in=1
+  for element in "${!array}"; do
+    if [ "$element" == "$seeking" ]; then
+      in=0
+      break
+    fi
+  done
+  return $in
+}
+
+dispatch() {
+  local domain=$1
+  local setting=$2
+  local value=$3
+  local func="${domain}_${setting/-/_}"
+
+  if [ -z "$domain" ] || [ -z "$setting" ]; then
+    info
+  elif array_contains "$domain" "$setting"; then
+    if [ -z "$value" ]; then
+      $func
+    else
+      $func "$value"
+    fi
+  else
+    info
+  fi
+}
+
+info() {
+  echo "Command line interface for common macos settings."
+  echo ""
+  echo "Syntax:"
+  echo "  gala <domain> <setting> [value]"
+  echo ""
+  echo "$(pad "domain" 10)$(pad "setting" 18)value"
+  echo "----------------------------------"
+  for domain in "${domains[@]}"; do
+    local d="${domain}[@]"
+    for setting in "${!d}"; do
+      local value=$(dispatch "$domain" "$setting")
+      echo "$(pad "$domain" 10)$(pad "$setting" 18)$value"
+    done
+  done
+  echo ""
+}
+
+dispatch "$@"
