@@ -138,7 +138,7 @@ if [ -f '/Users/jdeyerle/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users
 
 # Add personal scripts from dotfile repo to $PATH
 # export PATH="$(realpath "$0" | sed 's|\(.*\)/.*|\1|')"/bin:"$PATH"
-export PATH="$HOME/.dotfiles/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 # bun completions
 [ -s "/Users/jdeyerle/.bun/_bun" ] && source "/Users/jdeyerle/.bun/_bun"
 
