@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lazygit.json
+gui:
+  theme:
+    selectedLineBgColor:
+      - "#3B3F4C"
+    selectedRangeBgColor:
+      - "#3B3F4C"
+    nerdFontsVersion: "3"
+
+git:
+  paging:
+    colorArg: always
+    pager: diff-so-fancy
+    # pager: delta --paging=never
+
+os:
+  editPreset: 'nvim'
+
+notARepository: "quit" # one of: 'prompt' | 'create' | 'skip' | 'quit'
