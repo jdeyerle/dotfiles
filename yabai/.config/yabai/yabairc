@@ -1,18 +1,21 @@
+# see yabai man pages for more info
+# https://github.com/koekeishiya/yabai/wiki
+
+# Global Settings
+yabai -m config mouse_follows_focus on
+yabai -m config window_placement second_child
+yabai -m config auto_balance on
+
+# Space Setting
 yabai -m config layout bsp
 
-# Set all padding and gaps to 20pt (default: 0)
 yabai -m config top_padding    12
 yabai -m config bottom_padding 12
 yabai -m config left_padding   12
 yabai -m config right_padding  12
 yabai -m config window_gap     12
 
-# set mouse follows focus mode (default: off)
-yabai -m config mouse_follows_focus on
-
-yabai -m config mouse_drop_action swap
-
-# Disable specific apps
+# Rule
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Messages$" manage=off
