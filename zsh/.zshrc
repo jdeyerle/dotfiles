@@ -137,4 +137,13 @@ if [ -f '/Users/jdeyerle/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jdeye
 if [ -f '/Users/jdeyerle/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jdeyerle/.google-cloud-sdk/completion.zsh.inc'; fi
 
 # Add personal scripts from dotfile repo to $PATH
-export PATH="$(realpath "$0" | sed 's|\(.*\)/.*|\1|')"/bin:"$PATH"
+# export PATH="$(realpath "$0" | sed 's|\(.*\)/.*|\1|')"/bin:"$PATH"
+export PATH="$HOME/.dotfiles/bin:$PATH"
+# bun completions
+[ -s "/Users/jdeyerle/.bun/_bun" ] && source "/Users/jdeyerle/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export CONFIG_DIR="$HOME/.config/lazygit"
