@@ -2,4 +2,4 @@
   name = jdeyerle
   email = jdeyerle.dev@pm.me
 [core]
-	editor = nvim
+  editor = nvim
