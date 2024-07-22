@@ -1,4 +1,5 @@
-# shell completion
+# shell completion for brew 
+# has to be set before oh-my-zsh is sourced
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 # Path to your oh-my-zsh installation.
@@ -9,7 +10,10 @@ ZSH_THEME="bira-minimal"
 
 plugins=(
   # included
+  colored-man-pages
+  fancy-ctrl-z
   git
+  ripgrep
   web-search
 
   # community
@@ -17,7 +21,6 @@ plugins=(
   zsh-autosuggestions
 
   # custom
-  brew
   bun
   gcloud
   kbg
