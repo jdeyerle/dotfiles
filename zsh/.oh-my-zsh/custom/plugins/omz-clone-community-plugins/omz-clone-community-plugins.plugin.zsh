@@ -8,7 +8,7 @@ function _omz_clone_plugin() {
   fi
 }
 
-function omz_clone_custom_plugins() {
+function omz_clone_community_plugins() {
   _omz_clone_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
   _omz_clone_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
 }
